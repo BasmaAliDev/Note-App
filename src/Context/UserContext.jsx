@@ -1,0 +1,41 @@
+import axios from "axios";
+import { createContext, useState } from "react";
+
+export const UserContext = createContext(0);
+
+export default function UserContextProvider({ children }) {
+  const [notes, setNotes] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  async function sendDataToSignUp(values) {
+    const { data } = await axios.post(
+      "https://note-sigma-black.vercel.app/api/v1/users/signUp",
+      values
+    );
+
+    return data;
+  }
+
+  async function sendDataToLogin(values) {
+    const { data } = await axios.post(
+      "https://note-sigma-black.vercel.app/api/v1/users/signIn",
+      values
+    );
+
+    console.log(data);
+
+    return data;
+  }
+
+  function logOut() {
+    localStorage.removeItem("token");
+    setToken(null);
+  }
+
+  return (
+    <UserContext.Provider
+      value={{ sendDataToSignUp, sendDataToLogin, token, setToken, logOut,notes, setNotes }}
+    >
+      {children}
+    </UserContext.Provider>
+  );
+}
