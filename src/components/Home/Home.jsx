@@ -9,7 +9,7 @@ export default function Home() {
 
   useEffect(() => {
     getAllNotes({ token, userNotes: setNotes });
-  }, []);
+  }, [token, setNotes]);
 
   return (
     <>

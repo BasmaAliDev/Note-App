@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import style from './Sidebar.module.css'
 import { Search, showAddModal } from '../../utils/Note'
 import { useContext } from 'react';
@@ -9,7 +9,16 @@ import { UserContext } from '../../Context/UserContext';
 
 
 export default function Sidebar({isMinized, setIsMinized}) {
+  const navigate=useNavigate();
   const{token,logOut,setNotes,notes}=useContext(UserContext);
+ 
+
+  function userLogOut() {
+    logOut();
+    setTimeout(() => {
+      navigate("/login");
+    }, 0);
+  }
   
   console.log("token=>",token);
   return <>
@@ -35,7 +44,7 @@ export default function Sidebar({isMinized, setIsMinized}) {
             <i class="fa-solid fa-magnifying-glass"></i> {isMinized?"Search":""}
             </NavLink>
           </li>
-          <li  onClick={logOut}>
+          <li  onClick={userLogOut}>
             <span style={{cursor:'pointer'}}>
 
             <i class="fa-solid fa-chevron-left"></i>
@@ -43,7 +52,7 @@ export default function Sidebar({isMinized, setIsMinized}) {
              
             </span>
           </li>
-          <li></li>
+         
         </ul>
         <div className={`${style.change} shadow pointer`} onClick={()=>setIsMinized(!isMinized)}>
           <i className={`fa-solid fa-chevron-right`}></i>
