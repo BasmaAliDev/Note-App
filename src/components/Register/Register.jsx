@@ -18,7 +18,10 @@ export default function Register() {
     setIsLoading(true);
     try {
       const { data } = await axios.post("https://note-sigma-black.vercel.app/api/v1/users/signUp", user);
-      if (data.msg == "done") { navigate('/login') }
+      if (data.msg == "done") { 
+        setTimeout(() => {
+        navigate("/login");
+      }, 0); }
     } catch (error) {
       console.log(error);
     }
