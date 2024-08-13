@@ -59,19 +59,18 @@ export async function sendDataToAddNote({ title, content, token,userNotes }) {
 
 //export async function getAllNotes
 
-export async function getAllNotes({token,userNotes}){
+
+
+export async function getAllNotes({ token, userNotes }) {
   try {
-    const {data}=await axios.get("https://note-sigma-black.vercel.app/api/v1/notes",{
-      headers:{token}
-    })
-    console.log("getAllNotes",data.notes);
+    const {data}= await axios.get("https://note-sigma-black.vercel.app/api/v1/notes", 
+      { headers: { token } });
     userNotes(data.notes);
   } catch (error) {
-    userNotes([]);
+   userNotes([]);
+    console.error("Error fetching notes:", error);
   }
 }
-
-
 // !==================> Delete NOTE
 
 export function showDeleteModal({ noteID, token, userNotes }) {
@@ -96,6 +95,8 @@ async function sendDataToDelete({ noteID, token, userNotes }) {
     `https://note-sigma-black.vercel.app/api/v1/notes/${noteID}`,
     { headers: { token } }
   );
+  console.log("data after delete",data);
+  
 // get Notes after delete
   getAllNotes({ token, userNotes });
   Swal.fire("Deleted!", "Your Note has been deleted.", "success");

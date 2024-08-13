@@ -8,8 +8,10 @@ export default function Home() {
 
 
   useEffect(() => {
+    console.log("notes" , notes);
+    
     getAllNotes({ token, userNotes: setNotes });
-  }, [token, setNotes]);
+  }, [token]);
 
   return (
     <>
